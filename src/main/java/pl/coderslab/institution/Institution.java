@@ -1,7 +1,11 @@
 package pl.coderslab.institution;
 
+import pl.coderslab.donation.Donation;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "institution")
@@ -15,6 +19,17 @@ public class Institution {
     private String name;
 
     private String description;
+
+    @OneToMany(mappedBy = "institutions")
+    private List<Donation> donations =  new ArrayList<>();
+
+    public List<Donation> getDonations() {
+        return donations;
+    }
+
+    public void setDonations(List<Donation> donations) {
+        this.donations = donations;
+    }
 
     public Institution() {
     }
