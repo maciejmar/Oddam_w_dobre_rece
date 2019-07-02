@@ -14,13 +14,13 @@ public class HomeController {
 
     private InstitutionRepository institutionRepository;
     private DonationRepository donationRepository;
-    private CategoryRepository categoryRepository;
+
 
     public HomeController(InstitutionRepository institutionRepository, DonationRepository donationRepository,
                           CategoryRepository categoryRepository) {
         this.institutionRepository = institutionRepository;
         this.donationRepository = donationRepository;
-        this.categoryRepository = categoryRepository;
+
     }
 
     @RequestMapping("/")

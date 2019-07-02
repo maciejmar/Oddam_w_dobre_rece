@@ -8,7 +8,7 @@ import pl.coderslab.institution.Institution;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.sql.Time;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class Donation {
 
     @ManyToMany
     @NotEmpty
-    @JoinTable(name="donation_categories")
+    @JoinTable(name = "donation_categories")
     private List<Category> categories = new ArrayList<Category>();
 
 
@@ -40,15 +40,25 @@ public class Donation {
     @NotEmpty
     private String ZipCode;
     @NotEmpty
-    @DateTimeFormat(pattern ="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate pickUpDate;
     @NotEmpty
     private LocalTime pickUpTime;
     @NotEmpty
     private String pickUpComment;
+    @NotEmpty
+    private String phoneNumber;
 
     public Long getId() {
         return id;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setId(Long id) {

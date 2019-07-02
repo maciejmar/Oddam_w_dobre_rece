@@ -20,7 +20,7 @@ public class Institution {
 
     private String description;
 
-    @OneToMany(mappedBy = "institutions")
+    @OneToMany(mappedBy = "institution")
     private List<Donation> donations =  new ArrayList<>();
 
     public List<Donation> getDonations() {

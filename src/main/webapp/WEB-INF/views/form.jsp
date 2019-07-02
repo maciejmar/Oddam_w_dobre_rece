@@ -23,7 +23,7 @@
 <body>
 <header class="header--form-page">
     Witaj Agata
-    <%@include file="header.jsp"%>
+    <%@include file="header.jsp" %>
 
     <div class="slogan container container--90">
         <div class="slogan--item">
@@ -91,8 +91,7 @@
                             />
                             <span class="checkbox"></span>
                             <span class="description"
-                            >${category.name}</span
-                            >
+                            >${category.name}</span>
                         </label>
                     </div>
                 </c:forEach>
@@ -105,10 +104,60 @@
                         />
                         <span class="checkbox"></span>
                         <span class="description"
-                        >ubrania, które nadają się do ponownego użycia</span
-                        >
+                        >ubrania, które nadają się do ponownego użycia</span>
+                    </label>
+                    </div>
+                <div class="form-group form-group--checkbox">
+                <label>
+                        <input
+                                type="checkbox"
+                                name="categories"
+                                value="clothes-to-trash"
+                        />
+                        <span class="checkbox"></span>
+                        <span class="description"
+                        >ubrania do wyrzucenia</span>
                     </label>
                 </div>
+                <div class="form-group form-group--checkbox">
+                    <label>
+                        <input
+                                type="checkbox"
+                                name="categories"
+                                value="toys"
+                        />
+                        <span class="checkbox"></span>
+                        <span class="description"
+                        >zabawki</span>
+                    </label>
+                </div>
+                <div class="form-group form-group--checkbox">
+                    <label>
+                        <input
+                                type="checkbox"
+                                name="categories"
+                                value="books"
+                        />
+                        <span class="checkbox"></span>
+                        <span class="description"
+                        >książki</span>
+                    </label>
+                </div>
+                <div class="form-group form-group--checkbox">
+                    <label>
+                        <input
+                                type="checkbox"
+                                name="categories"
+                                value="others"
+                        />
+                        <span class="checkbox"></span>
+                        <span class="description"
+                        >inne</span>
+                    </label>
+                </div>
+
+
+
 
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn next-step">Dalej</button>
@@ -136,7 +185,7 @@
 
             <!-- krok 3 -->
 
-        div data-step="3">
+            <div data-step="3">
                 <h3>Wybierz organizacje, której chcesz pomóc:</h3>
 
                 <c:forEach items="${institutions}" var="institution">
@@ -145,7 +194,7 @@
                             <form:radiobutton path="institution" value="${institution}"/>
                             <span class="checkbox radio"></span>
                             <span class="description">
-                  <div class="title">${institution.name}”</div>
+                  <div class="title">Fundacja "${institution.name}”</div>
                   <div class="subtitle">${institution.description}</div>
                         </span>
                         </label>
