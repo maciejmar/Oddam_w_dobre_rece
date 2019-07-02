@@ -2,15 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<%--<form:checkboxes path="categories" items="${categories}"/>
-<form:select path="institution" items="${institutions}"/>
-<form:input path="zipCode" />
-<form:input path="street" />
-<form:input path="city"/>
-<form:input path="quantity"/>
-<form:textarea path="pickUpComment"/>
-<form:input type="date" path="pickUpDate"/>
-<form:input type="time" path="pickUpTime" />--%>
+
 
 <html>
 <head>
@@ -272,8 +264,14 @@
                             <li>
                                 <span class="icon icon-bag"></span>
                                 <span class="summary--text"
-                                >4 worki ubrań w dobrym stanie dla dzieci</span
-                                >
+                                >${quantity} worków
+                               <%-- <c:choose>
+                                    <c:when test ="${categories=clothes-to-use}"> ubrań dobrych dla dzieci
+                                </c:when>
+                                    <c:otherwise> nic się nie dzieje</c:otherwise>
+                                </c:choose>
+--%>
+                                </span>
                             </li>
 
                             <li>
