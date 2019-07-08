@@ -1,20 +1,45 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
-
-<html>
+<!DOCTYPE html>
+<html lang="pl">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Document</title>
-    <link rel="stylesheet" href="/resources/css/style.css"/>
+
+    <link rel="stylesheet" href="<c:url value="../../resources/css/style.css"/>"/>
 </head>
 <body>
 <header class="header--form-page">
-    Witaj Agata
-    <%@include file="header.jsp" %>
+    <nav class="container container--70">
+        <ul class="nav--actions">
+            <li class="logged-user">
+                Witaj Agata
+                <ul class="dropdown">
+                    <li><a href="#">Profil</a></li>
+                    <li><a href="#">Ustawienia</a></li>
+                    <li><a href="#">Moje zbiórki</a></li>
+                    <li><a href="#">Wyloguj</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul>
+            <li><a href="#" class="btn btn--without-border active">Start</a></li>
+            <li><a href="#" class="btn btn--without-border">O co chodzi?</a></li>
+            <li><a href="#" class="btn btn--without-border">O nas</a></li>
+            <li>
+                <a href="#" class="btn btn--without-border"
+                >Fundacje i organizacje</a
+                >
+            </li>
+            <li><a href="#" class="btn btn--without-border">Kontakt</a></li>
+        </ul>
+    </nav>
 
     <div class="slogan container container--90">
         <div class="slogan--item">
@@ -73,192 +98,350 @@
                 <h3>Zaznacz co chcesz oddać:</h3>
 
                 <c:forEach items="${categories}" var="category">
-
                     <div class="form-group form-group--checkbox">
                         <label>
-                            <form:checkbox
-                                    cssClass="cat-input"
-                                    path="categories"
-                                    value="${category}"
-                            />
+                            <input type="checkbox" name="categories" value={$"category.id"}/>
                             <span class="checkbox"></span>
-                            <span class="description cat-name"
-                            >${category.name}</span
-                            >
+                            <span class="description">${category.name}</span>
                         </label>
                     </div>
                 </c:forEach>
-                <div class="form-group form-group--checkbox">
+
+                <form:checkboxes path="categories" itemLabel="name" items="${categories}"/>
+                <form:select path="institution" itemLabel="name" items="${institutions}"/>
+                <form:input path="zipCode"/>
+
+                <form:input path="street"/>
+                <form:input path="city"/>
+                <form:input path="quantity"/>
+                <form:input path="phoneNumber"/>
+                <form:textarea path="pickUpComment"/>
+                <form:input type="date" path="pickUpDate"/>
+                <form:input type="time" path="pickUpTime"/>
+
+                <script
+                        src="https://code.jquery.com/jquery-3.4.1.min.js"
+                        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                        crossorigin="anonymous"></script>
+                <script type="text/javascript">
+                    $("#zipCode").change(function () {
+                        console.log(this);
+                        console.log($(this).val());
+                        $("#zipCodeSummary").html($(this).val());
+                    });
+                    $("#quantity").change(function () {
+                        console.log(this);
+                        console.log($(this).val());
+                        $("#quantitySummary").html($(this).val());
+                    });
+                    $('input[name=categories]').change(function () {
+                        $('#categoriesSummary').html('');
+                        $('input[name=categories]:checked').each(function () {
+                            $('#categoriesSummary').append($(this).next().text() + " ");
+                            console.log($(this).next().text());
+
+                        });
+                    });
+
+                    $('input[name=institutions]').change(function () {
+                        $('#institutionSummary').html('');
+                        $('input[name=institutions]:checked').each(function () {
+                            $('#institutionSummary').append($(this).next().text() + " ");
+                            console.log($(this).next().text());
+
+                        });
+                    });
+
+                        $("#street").change(function () {
+                            console.log(this);
+                            console.log($(this).val());
+                            $("#streetSummary").html($(this).val());
+                        });
+                        $("#city").change(function () {
+                            console.log(this);
+                            console.log($(this).val());
+                            $("#citySummary").html($(this).val());
+                        });
+                        $("#phoneNumber").change(function () {
+                            console.log(this);
+                            console.log($(this).val());
+                            $("#phoneNumberSummary").html($(this).val());
+                        });
+                        $("#pickUpDate").change(function () {
+                            console.log(this);
+                            console.log($(this).val());
+                            $("#pickUpDateSummary").html($(this).val());
+                        });
+                        $("#pickUpTime").change(function () {
+                            console.log(this);
+                            console.log($(this).val());
+                            $("#pickUpTimeSummary").html($(this).val());
+                        });
+                        $("#pickUpComment").change(function () {
+                            console.log(this);
+                            console.log($(this).val());
+                            $("#pickUpCommentSummary").html($(this).val());
+                        });
+
+
+
+                </script>
+
+
+
+
+
+                <div class="form-section">
+                    <h4>Oddajesz:</h4>
+                    <ul>
+                        <li>
+                            <span class="icon icon-bag"></span>
+                            <span class="summary--text">worków: <span id="quantitySummary"></span>
+                            <span id="categoriesSummary"></span>
+                            </span>
+                        </li>
+
+                        <li>
+                            <span class="icon icon-hand"></span>
+                            <span class="summary--text"
+                            >Dla fundacji <span id="institutionSummary"> w Warszawie</span></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-section form-section--columns">
+                    <div class="form-section--column">
+
+                        <h4>Adres odbioru:</h4>
+                        <ul>
+                            <li id="streetSummary"> ulica</li>
+                            <li id="citySummary" > miasto</li>
+                            <li id="zipCodeSummary"> kod</li>
+                            <li id="phoneNumberSummary"> telefon</li>
+                        </ul>
+                    </div>
+
+                    <div class="form-section--column">
+                        <h4>Termin odbioru:</h4>
+                        <ul>
+                            <li id="PickUpDateSummary"> data </li>
+                            <li id="PickUpTimeSummary"> godzina </li>
+                            <li id="PickUpCommentSummary"> uwagi dla kuriera</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-group form-group--buttons">
+                    <button type="button" class="btn next-step">Dalej</button>
+                </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div data-step="2">
+                <h3>Podaj liczbę 60l worków, w które spakowałeś/aś rzeczy:</h3>
+
+                <div class="form-group form-group--inline">
                     <label>
-                        <input
-                                type="checkbox"
-                                name="categories"
-                               <%-- value="clothes-to-use"--%>
-                        />
-                        <span class="checkbox"></span>
-                        <span class="description"
-                        >ubrania, które nadają się do ponownego użycia</span
-                        >
+                        Liczba 60l worków:
+                        <input type="number" id="quantity" step="1" min="1"/>
                     </label>
                 </div>
 
                 <div class="form-group form-group--buttons">
-                    <button id="cat-btn" type="button" class="btn next-step">Dalej</button>
+                    <button type="button" class="btn prev-step">Wstecz</button>
+                    <button type="button" class="btn next-step">Dalej</button>
                 </div>
             </div>
-        <!-- krok 2 -->
-
-        <div data-step="2">
-            <h3>Podaj liczbę 60l worków, w które spakowałeś/aś rzeczy:</h3>
-
-            <div class="form-group form-group--inline">
-                <label>
-                    Liczba 60l worków:
-                    <form:input type="number" path="quantity" min="1" step="1"/>
-                </label>
-            </div>
-
-            <div class="form-group form-group--buttons">
-                <button type="button" class="btn prev-step">Wstecz</button>
-                <button id="bag-btn" type="button" class="btn next-step">Dalej</button>
-            </div>
-        </div>
 
 
-        <!-- krok 3 -->
+            <!-- STEP 4 -->
+            <div data-step="3">
+                <h3>Wybierz organizacje, której chcesz pomóc:</h3>
 
-        <div data-step="3">
-            <h3>Wybierz organizacje, której chcesz pomóc:</h3>
-
-            <c:forEach items="${institutions}" var="institution">
                 <div class="form-group form-group--checkbox">
                     <label>
-                        <form:radiobutton path="institution" value="${institution}"/>
+                        <input type="radio" name="organization" value="old"/>
                         <span class="checkbox radio"></span>
                         <span class="description">
-                  <div class="title">Fundacja "${institution.name}”</div>
-                  <div class="subtitle">${institution.description}</div>
-                        </span>
+                  <div class="title">Fundacja “Bez domu”</div>
+                  <div class="subtitle">
+                    Cel i misja: Pomoc dla osób nie posiadających miejsca
+                    zamieszkania
+                  </div>
+                </span>
                     </label>
                 </div>
-            </c:forEach>
 
-            <div class="form-group form-group--buttons">
-                <button type="button" class="btn prev-step">Wstecz</button>
-                <button type="button" class="btn next-step">Dalej</button>
+                <div class="form-group form-group--checkbox">
+                    <label>
+                        <input type="radio" name="organization" value="old"/>
+                        <span class="checkbox radio"></span>
+                        <span class="description">
+                  <div class="title">Fundacja “Dla dzieci"</div>
+                  <div class="subtitle">
+                    Cel i misja: Pomoc osobom znajdującym się w trudnej sytuacji
+                    życiowej.
+                  </div>
+                </span>
+                    </label>
+                </div>
+
+                <div class="form-group form-group--buttons">
+                    <button type="button" class="btn prev-step">Wstecz</button>
+                    <button type="button" class="btn next-step">Dalej</button>
+                </div>
             </div>
-        </div>
 
-        <!-- krok 4 -->
+            <!-- STEP 5 -->
+            <div data-step="4">
+                <h3>Podaj adres oraz termin odbioru rzecz przez kuriera:</h3>
 
-        <div data-step="4">
-            <h3>Podaj adres i termin odbioru rzeczy przez kuriera</h3>
+                <div class="form-section form-section--columns">
+                    <div class="form-section--column">
 
-            <div class="form-section form-section--columns">
-                <div class="form-section--column">
-                    <h4>Adres odbioru</h4>
-                    <div class="form-group form-group--inline">
-                        <label> Ulica <form:input id="streetInput" path="street" type="text"/> </label>
+                        <h4>Adres odbioru</h4>
+                        <div class="form-group form-group--inline">
+                            <label> Ulica <input type="text" name="address"/> </label>
+                        </div>
+
+                        <div class="form-group form-group--inline">
+                            <label> Miasto <input type="text" name="city"/> </label>
+                        </div>
+
+                        <div class="form-group form-group--inline">
+                            <label>
+
+                                Kod pocztowy <input type="text" name="postcode"/>
+                            </label>
+                        </div>
+
+                        <div class="form-group form-group--inline">
+                            <label>
+                                Numer telefonu <input type="phone" name="phone"/>
+                            </label>
+                        </div>
                     </div>
 
-                    <div class="form-group form-group--inline">
-                        <label> Miasto <form:input id="cityInput" path="city" type="text"/> </label>
+                    <div class="form-section--column">
+                        <h4>Termin odbioru</h4>
+                        <div class="form-group form-group--inline">
+                            <label> Data <input type="date" name="data"/> </label>
+                        </div>
+
+                        <div class="form-group form-group--inline">
+                            <label> Godzina <input type="time" name="time"/> </label>
+                        </div>
+
+                        <div class="form-group form-group--inline">
+                            <label>
+                                Uwagi dla kuriera
+                                <textarea name="more_info" rows="5"></textarea>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form-group--buttons">
+                    <button type="button" class="btn prev-step">Wstecz</button>
+                    <button type="button" class="btn next-step">Dalej</button>
+                </div>
+            </div>
+
+            <!-- STEP 6 -->
+
+
+            <div data-step="5">
+                <h3>Podsumowanie Twojej darowizny</h3>
+
+                <div class="summary">
+                    <div class="form-section">
+                        <h4>Oddajesz:</h4>
+                        <ul>
+                            <li>
+                                <span class="icon icon-bag"></span>
+                                <span class="summary--text"
+                                >
+                                <c:out value="${quantitySummary}" default="brak parametru" />
+
+                                 worki ubrań w dobrym stanie dla dzieci</span
+                                >
+                            </li>
+
+                            <li>
+                                <span class="icon icon-hand"></span>
+                                <span class="summary--text"
+                                >Dla fundacji "Mam marzenie" w Warszawie</span
+                                >
+                            </li>
+                        </ul>
                     </div>
 
-                    <div class="form-group form-group--inline">
-                        <label>
-                            Kod pocztowy <form:input id="zipCodeInput" path="zipCode" type="text"/>
-                        </label>
-                    </div>
+                    <div class="form-section form-section--columns">
+                        <div class="form-section--column">
+                            <h4>Adres odbioru:</h4>
+                            <ul>
+                                <li>Prosta 51</li>
+                                <li>Warszawa</li>
+                                <li>99-098</li>
+                                <li>123 456 789</li>
+                            </ul>
+                        </div>
 
-                    <div class="form-group form-group--inline">
-                        <label>
-                            Numer telefonu <form:input id="phoneInput" path="phoneNumber" type="phone" name="phone"/>
-                        </label>
+                        <div class="form-section--column">
+                            <h4>Termin odbioru:</h4>
+                            <ul>
+                                <li>13/12/2018</li>
+                                <li>15:40</li>
+                                <li>Brak uwag</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-section--column">
-                    <h4>Termin odbioru</h4>
-                    <div class="form-group form-group--inline">
-                        <label> Data <form:input id="dateInput" path="pickUpDate" type="date"/> </label>
-                    </div>
-
-                    <div class="form-group form-group--inline">
-                        <label> Godzina <form:input id="timeInput" path="pickUpTime" type="time" name="time"/> </label>
-                    </div>
-
-                    <div class="form-group form-group--inline">
-                        <label>
-                            Uwagi dla kuriera
-                            <form:textarea id="commentInput" path="pickUpComment" rows="5"></form:textarea>
-                        </label>
-                    </div>
+                <div class="form-group form-group--buttons">
+                    <button type="button" class="btn prev-step">Wstecz</button>
+                    <button type="submit" class="btn">Potwierdzam</button>
                 </div>
             </div>
-            <div class="form-group form-group--buttons">
-                <button type="button" class="btn prev-step">Wstecz</button>
-                <button type="button" class="btn next-step" id="btn-last">Dalej</button>
-            </div>
-    </div>
 
-    <!-- Podsumowanie -->
-
-    <div data-step="5">
-        <h3>Podsumowanie Twojej darowizny</h3>
-
-        <div class="summary">
-            <div class="form-section">
-                <h4>Oddajesz:</h4>
-                <ul>
-                    <li>
-                        <span class="icon icon-bag"></span>
-                        <span id="bag-cat-summary" class="summary--text"
-                        ></span>
-                    </li>
-
-                    <li>
-                        <span class="icon icon-hand"></span>
-                        <span id="inst-sum" class="summary--text"
-                        ></span
-                        >
-                    </li>
-                </ul>
-            </div>
-
-            <div class="form-section form-section--columns">
-                <div class="form-section--column">
-                    <h4>Adres odbioru:</h4>
-                    <ul>
-                        <li id="streetSum"></li>
-                        <li id="citySum"></li>
-                        <li id="zipCodeSum"></li>
-                        <li id="phoneNumberSum"></li>
-                    </ul>
-                </div>
-
-                <div class="form-section--column">
-                    <h4>Termin odbioru:</h4>
-                    <ul>
-                        <li id="dateSum"></li>
-                        <li id="timeSum"></li>
-                        <li id="commentSum"></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group form-group--buttons">
-            <button type="button" class="btn prev-step">Wstecz</button>
-            <button type="submit" class="btn">Potwierdzam</button>
-        </div>
-    </div>
-    </form:form>
+        </form:form>
     </div>
 </section>
 
-<jsp:include page="footer.jsp"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="../../resources/js/app.js"></script>
+<footer>
+    <div class="contact">
+        <h2>Skontaktuj się z nami</h2>
+        <h3>Formularz kontaktowy</h3>
+        <form class="form--contact">
+            <div class="form-group form-group--50">
+                <input type="text" name="name" placeholder="Imię"/>
+            </div>
+            <div class="form-group form-group--50">
+                <input type="text" name="surname" placeholder="Nazwisko"/>
+            </div>
+
+            <div class="form-group">
+            <textarea
+                    name="message"
+                    placeholder="Wiadomość"
+                    rows="1"
+            ></textarea>
+            </div>
+
+            <button class="btn" type="submit">Wyślij</button>
+        </form>
+    </div>
+    <div class="bottom-line">
+        <span class="bottom-line--copy">Copyright &copy; 2018</span>
+        <div class="bottom-line--icons">
+            <a href="#" class="btn btn--small"
+            ><img src="images/icon-facebook.svg"
+            /></a>
+            <a href="#" class="btn btn--small"
+            ><img src="images/icon-instagram.svg"
+            /></a>
+        </div>
+    </div>
+</footer>
+
+<script src="<c:url value="../../resources/js/app.js"/>"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
 
     /**
      * Form Select
@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     }
-
     document.querySelectorAll(".form-group--dropdown select").forEach(el => {
         new FormSelect(el);
     });
@@ -73,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
     /**
      * Hide elements when clicked on document
      */
-    document.addEventListener("click", function (e) {
+    document.addEventListener("click", function(e) {
         const target = e.target;
         const tagName = target.tagName;
 
@@ -168,129 +167,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
     }
-
     const form = document.querySelector(".form--steps");
     if (form !== null) {
         new FormSteps(form);
     }
-//bag elements
-
-    var bagsNumber = ""
-    var bagInput = $("#bagInput")
-    var bagSummary = $("#bagSummary")
-    var bag_btn = $(#bag - btn)
-//values
-    var institution = ""
-    var street = ""
-    var city = ""
-    var zipCode = ""
-    var phoneNumber = ""
-    var date = ""
-    var time = ""
-    var comment = ""
-    //inputs
-    var categoriesInput = $(".catInput")
-    var institutionInput = $(".instInput")
-    var streetInput = $(#streetInput)
-    //buttons
-    var cat_btn = $("#cat-btn")
-
-    var catNames = $(".cat-name")
-    var institutionName = $("#instituionName")
-//summary
-    var instSum = $("#instSum")
-    var citySum
-    var streetSum = $("#streetSum")
-    var phone
-
-    bagInput.on("change", function () {
-        bagsNumber = "Oddałeś " + bagInput.val() + " worków" + "<br>"
-        console.log(bagInput.val());
-        console.log(bagsNumber)
-
-    });
-
-
-    categoriesInput.on("click", function () {
-        for (var i = 0; i < categoriesInput.length; i++) {
-            if (categoriesInput[i].checked == 1) {
-                console.log(catNames[i].innerText)
-            } else {
-                console.log(i + "unchecked")
-            }
-        }
-    });
-
-    cat_btn.on("click", function () {
-        bagSummary.html("Rodzaje darowizny: <br>")
-        for (var i = 0; i < categoriesInput.length; i++) {
-            if (categoriesInput[i].checked) {
-                bagSummary.append(catNames[i].innerText + "<br>")
-            }
-        }
-
-    })
-
-    bag_btn.on("click", function () {
-        bagSummary.prepend(bagsNumber)
-    })
-
-    inst_input.on("click", function () {
-        for (var i = 0; i < instInput.length; i++) {
-            if (instInput[i].checked) {
-                institution = institutionName[i].innerText
-                console.log(institution)
-                inst_sum.html("Dla fundacji " + institution)
-            }
-        }
-    })
-    street_input.on("change", function () {
-        console.log("test")
-        street = streetInput.val()
-        street_sum.html(street)
-        console.log(street)
-    })
-
-    $("#cityInput").on("change", function () {
-        city = $("#cityInput").val()
-        $("#citySum").html(city)
-        console.log(city)
-    })
-
-    $("#zipCodeInput").on("change", function () {
-        zipCode = $("#zipCodeInput").val()
-        $("#zipCodeSum").html(zipCode)
-        console.log(zipCode)
-    })
-
-    $("#phoneNumberInput").on("change", function () {
-        phone = $("#phoneNumberInput").val()
-        $("#phoneNumberSum").html(phoneNumber)
-        console.log(phoneNumber)
-    })
-
-
-    $("#dateInput").on("change", function () {
-        date = $("#dateInput").val()
-        $("#dateSum").html(date)
-        console.log(date)
-    })
-
-    $("#timeInput").on("change", function () {
-        time = $("#timeInput").val()
-        $("#timeSum").html(time)
-        console.log(time)
-    })
-
-    $("#commentInput").on("change", function () {
-        if ($("#commentInput").val() == "") {
-            $("#commentSum").html("Brak uwag")
-            console.log("Brak uwag")
-        } else {
-            comment = $("#commentInput").val()
-            $("#commentSum").html(comment)
-            console.log(comment)
-        }
-    })
 
 });
